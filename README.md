@@ -42,7 +42,7 @@ Or, as alternative, map the nbd device locally and access file systems:
  /dev/nbd5p3      4999168 268433407 263434240 125.6G 83 Linux
 ```
 
-Access via regular nbd tools:
+Access via regular nbd capable tools such as qemu-img:
 
 ```
 # show nbd backend info:
@@ -58,6 +58,10 @@ Access via regular nbd tools:
 # convert backup to qcow2 file (load plugin without cow backend for enhanced iops)
 
  qemu-img convert -p nbd://localhost -f raw -O qcow2 image.qcow2
+
+# convert backup to vmdk file:
+
+ qemu-img convert -p nbd://localhost -f raw -O vmdk image.vmdk
 ```
 
 # building
