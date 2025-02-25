@@ -51,3 +51,10 @@ Access via regular nbd tools:
         uri: nbd://localhost:10809/
  [..]
 ```
+
+# building
+
+```
+ sudo apt-get install nbdkit-plugin-dev
+ make
+```

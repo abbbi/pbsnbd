@@ -8,9 +8,10 @@ package main
 import (
 	"C"
 	"fmt"
-	"pbsnbd/nbdkit"
 	"time"
 	"unsafe"
+
+	"libguestfs.org/nbdkit"
 
 	bps "github.com/elbandi/go-proxmox-backup-client"
 )
