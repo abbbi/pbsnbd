@@ -30,13 +30,10 @@ var size uint64
 var image string
 var timestamp string
 var vmid string
-var disk []byte
-
 var repo string
 var password string
 var fingerprint string
 var namespace string
-
 var image_set = false
 var timestamp_set = false
 var vmid_set = false
@@ -44,10 +41,8 @@ var repo_set = false
 var namespace_set = false
 var fingerprint_set = false
 var password_set = false
-
 var client *bps.ProxmoxRestore
 var imagefh *bps.RestoreImage
-var backupTime string
 
 func (p *PBSDiskPlugin) Config(key string, value string) error {
 	if key == "image" {
