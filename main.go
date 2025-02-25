@@ -113,6 +113,7 @@ func (p *PBSDiskPlugin) GetReady() error {
 	t := uint64(f.Unix())
 
 	var err error
+	fmt.Printf("Connecting PBS: [%s]\n", repo)
 	client, err = bps.NewRestore(
 		repo,
 		namespace,
@@ -125,13 +126,13 @@ func (p *PBSDiskPlugin) GetReady() error {
 		"",
 	)
 	if err != nil {
-		return err
+		return nbdkit.PluginError{Errmsg: "Unable to connect: " + err.Error()}
 	}
 	fmt.Printf("Connected to PBS version: [%s]\n", bps.GetVersion())
 	fmt.Printf("Attempt to open image [vm/%s/%s/%s]\n", vmid, timestamp, image)
 	imagefh, err = client.OpenImage(image + ".fidx")
 	if err != nil {
-		return err
+		return nbdkit.PluginError{Errmsg: "Unable to open image: " + err.Error()}
 	}
 	fmt.Printf("Successfully opened image [vm/%s/%s/%s]\n", vmid, timestamp, image)
 	return nil
@@ -139,6 +140,13 @@ func (p *PBSDiskPlugin) GetReady() error {
 
 func (p *PBSDiskPlugin) Open(readonly bool) (nbdkit.ConnectionInterface, error) {
 	return &PBSDiskConnection{}, nil
+}
+func (p *PBSDiskPlugin) Load() {
+	fmt.Printf("%s Plugin loaded\n", pluginName)
+}
+
+func (p *PBSDiskPlugin) Unload() {
+	client.Close()
 }
 
 func (c *PBSDiskConnection) GetSize() (uint64, error) {
