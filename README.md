@@ -45,6 +45,8 @@ Or, as alternative, map the nbd device locally and access file systems:
 Access via regular nbd tools:
 
 ```
+# show nbd backend info:
+
  nbdinfo nbd://localhost
  protocol: newstyle-fixed without TLS, using structured packets
  export="":
@@ -52,6 +54,10 @@ Access via regular nbd tools:
         content: DOS/MBR boot sector
         uri: nbd://localhost:10809/
  [..]
+
+# convert backup to qcow2 file (load plugin without cow backend for enhanced iops)
+
+ qemu-img convert -p nbd://localhost -f raw -O qcow2 image.qcow2
 ```
 
 # building
@@ -60,3 +66,10 @@ Access via regular nbd tools:
  sudo apt-get install nbdkit-plugin-dev
  make
 ```
+
+# notes
+
+Use nbdkit options to
+
+ * change listen address / port
+ * enhance performance by using multiple threads (-t X)
