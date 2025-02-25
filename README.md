@@ -5,7 +5,7 @@ Export your virtual machine disk backups from a Proxmox Backup Server via NBD.
 To start an export, pass the plugin to nbdkit with required arguments:
 
 ```
- nbdkit --filter cow -f -v ./nbdkit-pbs-plugin.so \
+ nbdkit --filter cow -f ./nbdkit-pbs-plugin.so \
     image=drive-scsi0.img \
     vmid=103 \ 
     timestamp="2025-02-25T10:32:54Z" \
@@ -13,6 +13,10 @@ To start an export, pass the plugin to nbdkit with required arguments:
     fingerprint="EE:2F:53:29:F2:69:61:0C:D5:96:55:50:6B:2B:84:8E:EF:3E:A6:B0:CA:18:5C:F7:92:BA:54:71:15:56:83:5B" \
     password=test \
     namespace= \
+
+ Connected to PBS version: [1.4.1 (UNKNOWN)]
+ Attempt to open image [vm/103/2025-02-25T10:32:54Z/drive-scsi0.img]
+ Sucessfully opened image [vm/103/2025-02-25T10:32:54Z/drive-scsi0.img]
 ```
 
 The NBD device is by default reachable via localhost. The COW Filter allows

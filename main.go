@@ -7,6 +7,7 @@ package main
 
 import (
 	"C"
+	"fmt"
 	"pbsnbd/nbdkit"
 	"time"
 	"unsafe"
@@ -125,10 +126,13 @@ func (p *PBSDiskPlugin) GetReady() error {
 	if err != nil {
 		return err
 	}
+	fmt.Printf("Connected to PBS version: [%s]\n", bps.GetVersion())
+	fmt.Printf("Attempt to open image [vm/%s/%s/%s]\n", vmid, timestamp, image)
 	imagefh, err = client.OpenImage(image + ".fidx")
 	if err != nil {
 		return err
 	}
+	fmt.Printf("Sucessfully opened image [vm/%s/%s/%s]\n", vmid, timestamp, image)
 	return nil
 }
 
