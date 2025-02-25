@@ -104,10 +104,13 @@ func (p *PBSDiskPlugin) ConfigComplete() error {
 }
 
 func (p *PBSDiskPlugin) GetReady() error {
-	f, _ := time.Parse(time.RFC3339, timestamp)
+	var err error
+	f, err := time.Parse(time.RFC3339, timestamp)
+	if err != nil {
+		return nbdkit.PluginError{Errmsg: "Unable to parse timestamp: " + err.Error()}
+	}
 	t := uint64(f.Unix())
 
-	var err error
 	fmt.Printf("Connecting PBS: [%s]\n", repo)
 	client, err = bps.NewRestore(
 		repo,
