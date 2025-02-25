@@ -137,7 +137,11 @@ func (p *PBSDiskPlugin) Open(readonly bool) (nbdkit.ConnectionInterface, error) 
 }
 
 func (c *PBSDiskConnection) GetSize() (uint64, error) {
-	size, _ = imagefh.Size()
+	var err error
+	size, err = imagefh.Size()
+	if err != nil {
+		return 0, err
+	}
 	return size, nil
 }
 
