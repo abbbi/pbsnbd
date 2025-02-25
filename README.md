@@ -1,10 +1,8 @@
 # Proxmox Backup Server NBDKIT Plugin
 
-Export your virtual machine disks backups from a Proxmox Backup Server via NBD.
-Using the COW Filter, it can be used to test-boot virtual machines from outside
-a Proxmox Backup Server instance.
+Export your virtual machine disk backups from a Proxmox Backup Server via NBD.
 
-Example:
+To start an export, pass the plugin to nbdkit with required arguments:
 
 ```
  nbdkit --filter cow -f -v ./nbdkit-pbs-plugin.so \
@@ -17,7 +15,9 @@ Example:
     namespace= \
 ```
 
-Then, you can boot off the NBD device via:
+The NBD device is by default reachable via localhost. The COW Filter allows
+read/write operations to the disks without altering the original data. This
+way, you can boot off the NBD device directly using Qemu:
 
 ```
  qemu-system-x86_64 -m 2000 -hda nbd://localhost -cpu host -enable-kvm
@@ -36,13 +36,14 @@ Or, as alternative, map the nbd device locally and access file systems:
  /dev/nbd5p3      4999168 268433407 263434240 125.6G 83 Linux
 ```
 
-Or access it via regular nbd tools:
+Access via regular nbd tools:
 
 ```
-nbdinfo nbd://localhost
-protocol: newstyle-fixed without TLS, using structured packets
-export="":
+ nbdinfo nbd://localhost
+ protocol: newstyle-fixed without TLS, using structured packets
+ export="":
         export-size: 137438953472 (128G)
         content: DOS/MBR boot sector
         uri: nbd://localhost:10809/
+ [..]
 ```
