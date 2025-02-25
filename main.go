@@ -150,7 +150,13 @@ func (c *PBSDiskConnection) GetSize() (uint64, error) {
 }
 
 func (c *PBSDiskConnection) PRead(buf []byte, offset uint64, flags uint32) error {
-	imagefh.ReadAt(buf, int64(offset))
+	n, err := imagefh.ReadAt(buf, int64(offset))
+	if err != nil {
+		return err
+	}
+	if n != len(buf) {
+		return nbdkit.PluginError{Errmsg: "short read"}
+	}
 	return nil
 }
 
