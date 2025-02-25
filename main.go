@@ -132,7 +132,7 @@ func (p *PBSDiskPlugin) GetReady() error {
 	if err != nil {
 		return err
 	}
-	fmt.Printf("Sucessfully opened image [vm/%s/%s/%s]\n", vmid, timestamp, image)
+	fmt.Printf("Successfully opened image [vm/%s/%s/%s]\n", vmid, timestamp, image)
 	return nil
 }
 

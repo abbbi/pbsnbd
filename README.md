@@ -16,7 +16,7 @@ To start an export, pass the plugin to nbdkit with required arguments:
 
  Connected to PBS version: [1.4.1 (UNKNOWN)]
  Attempt to open image [vm/103/2025-02-25T10:32:54Z/drive-scsi0.img]
- Sucessfully opened image [vm/103/2025-02-25T10:32:54Z/drive-scsi0.img]
+ Successfully opened image [vm/103/2025-02-25T10:32:54Z/drive-scsi0.img]
 ```
 
 The NBD device is by default reachable via localhost. The COW Filter allows
