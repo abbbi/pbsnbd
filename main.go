@@ -141,7 +141,7 @@ func (p *PBSDiskPlugin) Load() {
 	fmt.Printf("%s Plugin loaded\n", pluginName)
 }
 
-func (p *PBSDiskPlugin) Unload() {
+func (p *PBSDiskPlugin) Close() {
 	client.Close()
 }
 
