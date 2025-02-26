@@ -33,7 +33,7 @@ var vmid string
 var repo string
 var password string
 var fingerprint string
-var namespace string
+var namespace string = ""
 var image_set = false
 var timestamp_set = false
 var vmid_set = false
@@ -97,9 +97,6 @@ func (p *PBSDiskPlugin) ConfigComplete() error {
 	if !password_set {
 		return nbdkit.PluginError{Errmsg: "password parameter is required"}
 	}
-	if !namespace_set {
-		return nbdkit.PluginError{Errmsg: "namespace parameter is required"}
-	}
 	return nil
 }
 
@@ -111,7 +108,7 @@ func (p *PBSDiskPlugin) GetReady() error {
 	}
 	t := uint64(f.Unix())
 
-	fmt.Printf("Connecting PBS: [%s]\n", repo)
+	fmt.Printf("Connecting PBS: [%s] Namespace: [%s]\n", repo, namespace)
 	client, err = bps.NewRestore(
 		repo,
 		namespace,

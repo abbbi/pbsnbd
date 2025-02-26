@@ -6,19 +6,19 @@ To start an export, pass the plugin to nbdkit with required arguments:
 
 ```
  nbdkit --filter cow -f ./nbdkit-pbs-plugin.so \
-    image=drive-scsi0.img \
-    vmid=103 \ 
-    timestamp="2025-02-25T10:32:54Z" \
-    repo="root@pam@192.168.161.241:test" \
+    image=drive-scsi0.img \                     # disk image to mount
+    vmid=103 \                                  # vm id
+    timestamp="2025-02-25T10:32:54Z" \          # snapshot timestamp
+    repo="root@pam@192.168.161.241:test" \      # repository
     fingerprint="EE:2F:53:29:F2:69:61:0C:D5:96:55:50:6B:2B:84:8E:EF:3E:A6:B0:CA:18:5C:F7:92:BA:54:71:15:56:83:5B" \
     password=test \
-    namespace=
+    namespace=                                  # namespace, optional
 
-  pbsnbd Plugin loaded
-  Connecting PBS: [root@pam@192.168.161.241:test]
-  Connected to PBS version: [1.4.1 (UNKNOWN)]
-  Attempt to open image [vm/103/2025-02-25T15:48:38Z/drive-scsi0.img]
-  Successfully opened image [vm/103/2025-02-25T15:48:38Z/drive-scsi0.img]
+    pbsnbd Plugin loaded
+    Connecting PBS: [root@pam@192.168.161.241:test] Namespace: []
+    Connected to PBS version: [1.4.1 (UNKNOWN)]
+    Attempt to open image [vm/103/2025-02-25T15:48:38Z/drive-scsi0.img]
+    Successfully opened image [vm/103/2025-02-25T15:48:38Z/drive-scsi0.img]
 ```
 
 The NBD device is by default reachable via localhost. The COW Filter (--filter
