@@ -139,6 +139,7 @@ func (p *PBSDiskPlugin) GetReady() error {
 func (p *PBSDiskPlugin) Open(readonly bool) (nbdkit.ConnectionInterface, error) {
 	return &PBSDiskConnection{}, nil
 }
+
 func (p *PBSDiskPlugin) Load() {
 	fmt.Printf("%s Plugin loaded\n", pluginName)
 }

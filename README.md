@@ -21,15 +21,23 @@ To start an export, pass the plugin to nbdkit with required arguments:
   Successfully opened image [vm/103/2025-02-25T15:48:38Z/drive-scsi0.img]
 ```
 
-The NBD device is by default reachable via localhost. The COW Filter allows
-read/write operations to the disks without altering the original data. This
-way, you can boot off the NBD device directly using Qemu:
+The NBD device is by default reachable via localhost. The COW Filter (--filter
+cow) allows read/write operations to the disks without altering the original
+data. This way, you can boot off the NBD device directly using Qemu:
 
 ```
  qemu-system-x86_64 -m 2000 -hda nbd://localhost -cpu host -enable-kvm
 ```
 
-Or, as alternative, map the nbd device locally and access file systems:
+You can also start nbdkit without the Filter option and use an overlay
+image instead:
+
+```
+ qemu-img create -b nbd://localhost -f qcow2 -F raw image.qcow2
+ qemu-system-x86_64 -m 2000 -hda image.qcow2 -cpu host -enable-kvm
+```
+
+To access the filesystems, map the nbd backend into an device:
 
 ```
  qemu-nbd  -c /dev/nbd5 nbd://localhost
