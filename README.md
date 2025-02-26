@@ -37,11 +37,18 @@ image instead:
  qemu-system-x86_64 -m 2000 -hda image.qcow2 -cpu host -enable-kvm
 ```
 
-To access the filesystems, map the nbd backend into an device:
+Mount volumes using guestmount:
 
 ```
- qemu-nbd  -c /dev/nbd5 nbd://localhost
- fdisk -l /dev/nbd5 
+ nbdkit -f ./nbdkit-pbs-plugin.so [..]
+ guestmount --ro --format=raw -ia nbd://localhost /empty/
+```
+
+To map the nbd backend into an device:
+
+```
+ qemu-nbd  -c /dev/nbd0 nbd://localhost
+ fdisk -l /dev/nbd0
  Disk /dev/nbd5: 128 GiB, 137438953472 bytes, 268435456 sectors
  [..]
  Device      Boot   Start       End   Sectors   Size Id Type
