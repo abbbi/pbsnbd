@@ -123,7 +123,10 @@ func (p *PBSDiskPlugin) GetReady() error {
 	if err != nil {
 		return nbdkit.PluginError{Errmsg: "Unable to connect: " + err.Error()}
 	}
-	fmt.Printf("Connected to PBS version: [%s]\n", bps.GetVersion())
+	fmt.Printf("Connected to PBS version: [%s] Default chunk size: [%d]\n",
+		bps.GetVersion(),
+		bps.GetDefaultChunkSize(),
+	)
 	fmt.Printf("Attempt to open image [vm/%s/%s/%s]\n", vmid, timestamp, image)
 	imagefh, err = client.OpenImage(image + ".fidx")
 	if err != nil {
@@ -155,6 +158,9 @@ func (c *PBSDiskConnection) GetSize() (uint64, error) {
 }
 
 func (c *PBSDiskConnection) PRead(buf []byte, offset uint64, flags uint32) error {
+	if len(buf) > int(bps.GetDefaultChunkSize()) {
+		return nbdkit.PluginError{Errmsg: "request too big: not implemented"}
+	}
 	n, err := imagefh.ReadAt(buf, int64(offset))
 	if err != nil {
 		return err
