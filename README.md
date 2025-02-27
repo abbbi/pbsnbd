@@ -94,3 +94,6 @@ Use nbdkit options to
 
  * change listen address / port
  * enhance performance by using multiple threads (-t X)
+ * don't use the module with --run option for nbdkit or if you want to run
+   nbdkit as background process, as the golang runtime is not fork() safe, see:
+   https://gitlab.com/nbdkit/nbdkit/-/issues/29
