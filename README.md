@@ -1,5 +1,9 @@
 # Proxmox Backup Server NBDKIT Plugin
 
+Note: the golang implementation may deadlock if nbdkit is forked into
+the background, you can use the [c version of the plugin](https://github.com/abbbi/cpbsnbd)
+if you need this functionality.
+
 Export your virtual machine disk backups from a Proxmox Backup Server via NBD.
 
 To start an export, pass the plugin to nbdkit with required arguments:
