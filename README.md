@@ -7,4 +7,4 @@ applications that use fork().
 As this limits the usecases with this plugin, i have re-implemented the plugin
 in C:
 
-    [cpbsnbd](https://github.com/abbbi/cpbsnbd)
+[cpbsnbd](https://github.com/abbbi/cpbsnbd)
